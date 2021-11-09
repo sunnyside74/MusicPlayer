@@ -31,10 +31,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.NotificationCompat;
+//import androidx.appcompat.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -654,7 +655,10 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         // Hide the timestamp
         builder.setShowWhen(false);
         // Set the Notification style
-        builder.setStyle(new NotificationCompat.MediaStyle()
+//        builder.setStyle(new NotificationCompat.MediaStyle()
+//                .setMediaSession(mSession.getSessionToken())
+//                .setShowActionsInCompactView(0, 1, 2));
+        builder.setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                 .setMediaSession(mSession.getSessionToken())
                 .setShowActionsInCompactView(0, 1, 2));
         // Set the Notification color

@@ -16,6 +16,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
@@ -25,7 +26,7 @@
         android:id="@+id/noti_album_art_iv"
         android:layout_width="60dp"
         android:layout_height="62dp"
-        android:src="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +60,7 @@
         </LinearLayout>
 
         <ImageView
-            android:src="@color/white"
+            app:srcCompat="@color/white"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:src="@android:drawable/ic_media_previous" />
+                app:srcCompat="@android:drawable/ic_media_previous" />
 
             <ImageButton
                 android:id="@+id/noti_play_ib"
@@ -84,7 +85,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:src="@android:drawable/ic_media_play" />
+                app:srcCompat="@android:drawable/ic_media_play" />
 
             <ImageButton
                 android:id="@+id/noti_next_ib"
@@ -92,7 +93,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:src="@android:drawable/ic_media_next" />
+                app:srcCompat="@android:drawable/ic_media_next" />
 
             <ImageButton
                 android:id="@+id/noti_close_ib"
@@ -100,7 +101,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:src="@android:drawable/arrow_up_float" />
+                app:srcCompat="@android:drawable/arrow_up_float" />
 
         </LinearLayout>
 

@@ -24,8 +24,10 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,7 +39,6 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +85,7 @@ public class AddPlaylistActivity extends AppCompatActivity implements SearchView
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_add_playlist, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
-        mSearchView = (SearchView) menuItem.getActionView();
+        mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnQueryTextFocusChangeListener(this);
         return true;

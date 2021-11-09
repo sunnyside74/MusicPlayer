@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -14,7 +15,7 @@
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_no_image" />
+            app:srcCompat="@mipmap/ic_no_image" />
 
     </LinearLayout>
 
@@ -54,7 +55,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/selector_play"
+        app:srcCompat="@drawable/selector_play"
         android:visibility="gone" />
 
 

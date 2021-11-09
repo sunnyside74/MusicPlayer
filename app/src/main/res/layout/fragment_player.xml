@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,7 +12,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:src="@mipmap/ic_no_image" />
+        app:srcCompat="@mipmap/ic_no_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/selector_repeat" />
+            app:srcCompat="@drawable/selector_repeat" />
 
         <ImageButton
             android:id="@+id/player_favorite_ib"
@@ -34,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/selector_favorite" />
+            app:srcCompat="@drawable/selector_favorite" />
 
         <ImageButton
             android:id="@+id/player_shuffle_ib"
@@ -43,7 +44,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/selector_shuffle" />
+            app:srcCompat="@drawable/selector_shuffle" />
 
     </LinearLayout>
 

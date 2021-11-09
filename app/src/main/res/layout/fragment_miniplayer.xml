@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
@@ -10,7 +11,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="5dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_no_image" />
+        app:srcCompat="@mipmap/ic_no_image" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -47,21 +48,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@mipmap/ic_previous" />
+        app:srcCompat="@mipmap/ic_previous" />
 
     <ImageButton
         android:id="@+id/player_play_ib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@drawable/selector_play" />
+        app:srcCompat="@drawable/selector_play" />
 
     <ImageButton
         android:id="@+id/player_next_ib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@mipmap/ic_next" />
+        app:srcCompat="@mipmap/ic_next" />
 
 
 </LinearLayout>
