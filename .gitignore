@@ -9,3 +9,5 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/jarRepositories.xml
+/.idea/deploymentTargetDropDown.xml
+/app/debug/app-debug.aab
