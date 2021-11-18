@@ -48,6 +48,7 @@ captures/
 *.ipr
 *~
 *.swp
+app/debug/
 
 # Keystore files
 *.jks
@@ -95,6 +96,7 @@ obj/
 .idea/gradle.xml
 .idea/jarRepositories.xml
 .idea/navEditor.xml
+.idea/deploymentTargetDropDown.xml
 
 # OS-specific files
 .DS_Store
