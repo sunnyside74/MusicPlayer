@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Música</string>
+    <string name="app_name">R2 Jugador</string>
     <string name="adapter_songs">" Canciones"</string>
     <string name="add_playlist">Añadir lista de reproducción</string>
     <string name="add_playlist_hint">Por favor, introduzca un nombre para la lista de reproducción.</string>

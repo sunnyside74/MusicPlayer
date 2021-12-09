@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Music</string>
+    <string name="app_name">R2 Player</string>
     <string name="adapter_songs">" 曲"</string>
     <string name="add_playlist">プレイリストを追加</string>
     <string name="add_playlist_hint">プレイリストの名前を入力してください。</string>
