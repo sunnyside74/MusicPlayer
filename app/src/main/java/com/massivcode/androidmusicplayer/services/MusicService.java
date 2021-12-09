@@ -17,6 +17,8 @@
 package com.massivcode.androidmusicplayer.services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -31,14 +33,14 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import androidx.annotation.Nullable;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-//import androidx.appcompat.app.NotificationCompat;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.massivcode.androidmusicplayer.R;
 import com.massivcode.androidmusicplayer.activities.MainActivity;
@@ -64,6 +66,8 @@ import java.util.Random;
 
 import de.greenrobot.event.EventBus;
 
+//import androidx.appcompat.app.NotificationCompat;
+
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
@@ -76,6 +80,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public static final String ACTION_PAUSE_UNPLUGGED = "ACTION_PAUSE_UNPLUGGED";
     public static final String ACTION_PLAY_SELECTED = "ACTION_PLAY_SELECTED";
     public static final String ACTION_FINISH = "ACTION_FINISH";
+    public static final int NOTIFICATION_ID = 1;
 
     private boolean isReady = false;
     private MediaSessionCompat mSession;
@@ -649,7 +654,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         }
     }
 
-    private void showNotificationUpperKitKat(MediaMetadataCompat metadata) {
+    private void showNotificationUpperKitKat(MediaMetadataCompat metadata) {    // Higher Android 5.0 (Lollipop), Under 7.1 (Nouget)
         // Notification 작성
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         // Hide the timestamp
@@ -748,8 +753,6 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         Notification notification = builder.setAutoCancel(true).build();
 
         startForeground(1, notification);
-
-
     }
 
     public int getPositionAtPreviousOrNext(String flag) {
@@ -796,7 +799,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         return result;
     }
 
-    private void showNotificationUnderLollipop() {
+    private void showNotificationUnderLollipop() {          // Lower Android 4.4W (Kitket)
         Notification.Builder builder = new Notification.Builder(this);
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.notification);
 
@@ -889,14 +892,135 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         startForeground(1, notification);
     }
 
-    private void showNotification() {
-        if (Build.VERSION.SDK_INT < 21) {
-            showNotificationUnderLollipop();
-        } else {
-            setMetaData();
-            showNotificationUpperKitKat(mMetadata);
+    private void showNotificationHigherOreo(MediaMetadataCompat metadata){      // Higher Android 8.0 (Oreo)
+        // Set Notification Channel
+        int notificationId = 1;
+        String channelId = "R2 Player";
+        String channelName = "R2 Player Name";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
         }
+
+        // Notification 작성
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId);
+
+        // Hide the timestamp
+        builder.setShowWhen(false);
+
+        // Set the Notification style
+//        builder.setStyle(new NotificationCompat.MediaStyle()
+//                .setMediaSession(mSession.getSessionToken())
+//                .setShowActionsInCompactView(0, 1, 2));
+        builder.setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                .setMediaSession(mSession.getSessionToken())
+                .setShowActionsInCompactView(0, 1, 2));
+
+        // Set the Notification color
+        builder.setColor(Color.parseColor("#2196F3"));
+
+        // Set the large and small icons
+        Bitmap bitmap = MusicInfoLoadUtil.getBitmap(getApplicationContext(), mCurrentMusicInfo.getUri(), 4);
+        if (bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_no_image);
+        }
+        builder.setLargeIcon(bitmap);
+        builder.setSmallIcon(R.mipmap.ic_no_image);
+        builder.setContentTitle(mCurrentMusicInfo.getTitle());
+        builder.setContentText(mCurrentMusicInfo.getArtist());
+        builder.setChannelId(channelId);
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        int icon;
+        if (mMediaPlayer.isPlaying()) {
+            Log.d(TAG, "is playing");
+            icon = android.R.drawable.ic_media_pause;
+        } else {
+            Log.d(TAG, "is not playing");
+            icon = android.R.drawable.ic_media_play;
+        }
+
+        // 이전 버튼을 눌렀을 때 실행하는 작업
+        // =========================================================================================
+
+
+        Intent musicPreviousIntent = new Intent(getApplicationContext(), MusicService.class);
+        musicPreviousIntent.putExtra("metadata", metadata);
+        musicPreviousIntent.setAction(ACTION_PLAY_PREVIOUS);
+        musicPreviousIntent.putExtra("position", getPositionAtPreviousOrNext(ACTION_PLAY_PREVIOUS));
+
+        PendingIntent musicPreviousPendingIntent = PendingIntent.getService(getApplicationContext(),
+                0, musicPreviousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(android.R.drawable.ic_media_previous, "prev", musicPreviousPendingIntent);
+        // =========================================================================================
+
+        // 재생 버튼을 눌렀을 때 실행하는 작업
+        // =========================================================================================
+        Intent musicStopIntent = new Intent(getApplicationContext(), MusicService.class);
+        musicStopIntent.putExtra("metadata", metadata);
+        musicStopIntent.setAction(ACTION_PAUSE);
+
+        PendingIntent musicStopPendingIntent = PendingIntent.getService(getApplicationContext(),
+                1,
+                musicStopIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.addAction(icon, "pause", musicStopPendingIntent);
+        // =========================================================================================
+
+        // 다음 버튼을 눌렀을 때 실행하는 작업
+        // =========================================================================================
+        Intent musicNextIntent = new Intent(getApplicationContext(), MusicService.class);
+        musicNextIntent.putExtra("metadata", metadata);
+        musicNextIntent.setAction(ACTION_PLAY_NEXT);
+        musicNextIntent.putExtra("position", getPositionAtPreviousOrNext(ACTION_PLAY_NEXT));
+
+        PendingIntent musicNextPendingIntent = PendingIntent.getService(getApplicationContext(),
+                2, musicNextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.addAction(android.R.drawable.ic_media_next, "next", musicNextPendingIntent);
+        // =========================================================================================
+
+        // 종료 버튼을 눌렀을 때 실행하는 작업
+        // =========================================================================================
+        Intent closeIntent = new Intent(getApplicationContext(), MusicService.class);
+        closeIntent.setAction(ACTION_FINISH);
+
+        PendingIntent closePendingIntent = PendingIntent.getService(getApplicationContext(), 3, closeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(android.R.drawable.arrow_up_float, "close", closePendingIntent);
+        // =========================================================================================
+
+        // Notification 터치 했을 때 실행할 PendingIntent 지정
+        // =========================================================================================
+        Intent activityStartIntent = new Intent(MainActivity.ACTION_NAME);
+        activityStartIntent.putExtra("restore", getCurrentInfo());
+        PendingIntent activityStartPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                1,
+                activityStartIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(activityStartPendingIntent);
+        // =========================================================================================
+
+
+        Notification notification = builder.setAutoCancel(true).build();
+
+        startForeground(notificationId, notification);
     }
 
 
+    private void showNotification() {
+        if (Build.VERSION.SDK_INT >= 26) {          // Higher Android 8.0 (Oreo)
+            setMetaData();
+            showNotificationHigherOreo(mMetadata);
+        } else if ((Build.VERSION.SDK_INT >= 21) && (Build.VERSION.SDK_INT <= 25)) {    // Higher Android 5.0 (Lollipop), Lower 7.1 (Nouget)
+            setMetaData();
+            showNotificationUpperKitKat(mMetadata);
+        } else if (Build.VERSION.SDK_INT <= 20) {    // Lower Android 4.4W (Kitket)
+            showNotificationUnderLollipop();
+        }
+    }
 }

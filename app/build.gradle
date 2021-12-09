@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.massivcode.androidmusicplayer"
         minSdkVersion 25
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -41,4 +41,5 @@ dependencies {
     implementation 'com.suwonsmartapp:async-bitmap-loader:0.2'
     implementation 'de.greenrobot:eventbus:2.4.0'
     implementation 'com.github.clans:fab:1.6.2'
+    implementation 'androidx.cardview:cardview:1.0.0'           // cardview
 }
