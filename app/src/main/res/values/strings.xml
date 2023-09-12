@@ -27,6 +27,7 @@
     <string name="nav_menu_title_2">Playlist</string>
     <string name="nav_menu_title_3">Artists</string>
     <string name="nav_menu_title_4">Tracks</string>
+    <string name="nav_menu_title_5">Streams</string>
     <string name="notify_search">Please Search!</string>
     <string name="add_playlist_hint">Please enter a name for the playlist.</string>
     <string name="cancel">Cancel</string>
@@ -59,6 +60,7 @@
         <item>@string/nav_menu_title_2</item>
         <item>@string/nav_menu_title_3</item>
         <item>@string/nav_menu_title_4</item>
+        <item>@string/nav_menu_title_5</item>
     </string-array>
 
 </resources>

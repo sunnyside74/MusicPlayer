@@ -6,6 +6,9 @@
         <item android:id="@+id/nav_playlist" android:title="@string/nav_menu_title_2"/>
         <item android:id="@+id/nav_artist" android:title="@string/nav_menu_title_3"/>
         <item android:id="@+id/nav_songs" android:title="@string/nav_menu_title_4"/>
+        <item
+            android:id="@+id/nav_stream"
+            android:title="@string/nav_menu_title_5" />
     </group>
 
 </menu>

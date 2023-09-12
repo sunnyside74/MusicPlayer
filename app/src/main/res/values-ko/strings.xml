@@ -5,6 +5,7 @@
     <string name="nav_menu_title_2">재생목록</string>
     <string name="nav_menu_title_3">아티스트</string>
     <string name="nav_menu_title_4">노래</string>
+    <string name="nav_menu_title_5">방송</string>
     <string name="adapter_songs">" 곡"</string>
     <string name="add_playlist">재생목록 추가</string>
     <string name="add_playlist_hint">재생목록 이름을 입력해주세요.</string>
