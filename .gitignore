@@ -68,6 +68,10 @@ obj/
 
 # IntelliJ IDEA
 *.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
 *.iws
 /out/
 
